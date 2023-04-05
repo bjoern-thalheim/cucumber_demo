@@ -24,7 +24,7 @@ public class CaptureStepDefinitions {
     private int port;
 
     @When("Thought {string} is collected")
-    public void thought_is_collected(String thought) throws IOException {
+    public void thoughtIsCollected(String thought) throws IOException {
         // given
         HttpPost post = new HttpPost("http://localhost:%d/gtd/inbox".formatted(port));
         post.setEntity(new StringEntity(thought));
@@ -35,7 +35,7 @@ public class CaptureStepDefinitions {
     }
 
     @Then("Inbox contains {string}")
-    public void inbox_contains(String thought) throws IOException {
+    public void inboxContains(String thought) throws IOException {
         // given
         HttpUriRequest get = new HttpGet("http://localhost:%d/gtd/inbox".formatted(port));
         // when
