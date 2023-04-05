@@ -8,14 +8,13 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -27,7 +26,8 @@ public class CaptureStepDefinitions {
     @When("Thought {string} is collected")
     public void thought_is_collected(String thought) throws IOException {
         // given
-        HttpUriRequest post = new HttpPost("http://localhost:%d/gtd/inbox/".formatted(port) + URLEncoder.encode(thought, StandardCharsets.UTF_8));
+        HttpPost post = new HttpPost("http://localhost:%d/gtd/inbox".formatted(port));
+        post.setEntity(new StringEntity(thought));
         // when
         HttpResponse postResponse = HttpClientBuilder.create().build().execute(post);
         // then
